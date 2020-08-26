@@ -3,21 +3,23 @@ import { WEATHER_TYPES, WWO_CODES } from "../constants";
 
 export const getWeatherForLocation = async (city, state) => {
   try {
-    debugger;
     const url = `https://wttr.in/~${city}+${state}?format=j1`;
-    const data = await axios.get(url);
+    const response = await axios.get(url);
 
-    if (!data) throw new Error("Failed to get weather data.");
+    if (response.status !== 200) throw new Error("Failed to get weather data.");
+
+    const data = response.data;
 
     const currentDateForecast = getDailyForecast(data.weather[0].hourly);
     const currentConditions = {
       ...currentDateForecast,
-      tempCurrent: data.current_condition.temp_F
+      tempCurrent: data.current_condition[0].temp_F
     };
+
     const forecast = [
       getDailyForecast(data.weather[1].hourly),
-      getDailyForecast(data.weather[2].hourly),
-      getDailyForecast(data.weather[3].hourly)
+      getDailyForecast(data.weather[2].hourly)
+      //(data.weather[3].hourly)
     ];
 
     return {
@@ -44,11 +46,15 @@ const getDailyForecast = dailyWeather => {
 };
 
 const mapWeatherCodeToWeatherType = weatherCode => {
+  let weatherType = null;
+
   Object.keys(WWO_CODES).forEach(key => {
-    if (WWO_CODES[key].includes(weatherCode)) return WEATHER_TYPES[key];
+    if (WWO_CODES[key].includes(weatherCode)) {
+      weatherType = WEATHER_TYPES[key];
+    }
   });
 
-  return null;
+  return weatherType;
 };
 
 const getDailyWeatherType = dailyWeather => {
@@ -80,7 +86,8 @@ const getDailyWeatherType = dailyWeather => {
       a.time > b.time ? 1 : -1
     );
     const midDayWeatherCode =
-      orderedDailyWeather[Math.round(orderedDailyWeather.length)].weatherCode;
+      orderedDailyWeather[Math.round(orderedDailyWeather.length / 2)]
+        .weatherCode;
     return mapWeatherCodeToWeatherType(midDayWeatherCode);
   }
 
