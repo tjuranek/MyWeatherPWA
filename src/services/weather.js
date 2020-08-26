@@ -3,17 +3,26 @@ import { WEATHER_TYPES, WWO_CODES } from "../constants";
 
 export const getWeatherForLocation = async (city, state) => {
   try {
+    debugger;
     const url = `https://wttr.in/~${city}+${state}?format=j1`;
     const data = await axios.get(url);
 
     if (!data) throw new Error("Failed to get weather data.");
 
+    const currentDateForecast = getDailyForecast(data.weather[0].hourly);
     const currentConditions = {
-      temp: data.current_condition.temp_F
+      ...currentDateForecast,
+      tempCurrent: data.current_condition.temp_F
     };
+    const forecast = [
+      getDailyForecast(data.weather[1].hourly),
+      getDailyForecast(data.weather[2].hourly),
+      getDailyForecast(data.weather[3].hourly)
+    ];
 
     return {
-      currentConditions: {}
+      currentConditions: currentConditions,
+      forecast: forecast
     };
   } catch (error) {
     console.error(error);
@@ -21,13 +30,17 @@ export const getWeatherForLocation = async (city, state) => {
   }
 };
 
-const getDailyForecast = weather => {
-  const hourlyTemps = weather.map(hourly => hourly.tempF);
+const getDailyForecast = dailyWeather => {
+  const hourlyTemps = dailyWeather.map(hourly => hourly.tempF);
   const tempHigh = Math.max(...hourlyTemps);
   const tempLow = Math.min(...hourlyTemps);
+  const weatherDescription = getDailyWeatherType(dailyWeather);
 
-  // WHERE I LEFT OFF: i need to get weather codes for each hourly (really 3 hour) weather object and return the most used one, otherwise the mid-day one. then get a day of week from the date and return
-  // and build out the current conditions and forecast in getWeatherForLocation();
+  return {
+    tempHigh: tempHigh,
+    tempLow: tempLow,
+    weatherDescription: weatherDescription
+  };
 };
 
 const mapWeatherCodeToWeatherType = weatherCode => {
@@ -36,4 +49,47 @@ const mapWeatherCodeToWeatherType = weatherCode => {
   });
 
   return null;
+};
+
+const getDailyWeatherType = dailyWeather => {
+  // convert all the codes to weather types, create empty object to store their total occurrence count
+  const weatherCodes = dailyWeather.map(
+    hourlyWeather => hourlyWeather.weatherCode
+  );
+  const weatherTypes = weatherCodes.map(code =>
+    mapWeatherCodeToWeatherType(code)
+  );
+  let weatherTypeOccurrences = {};
+
+  // get the occurrence count for each unique weather type,
+  weatherTypes.forEach(weatherType => {
+    if (Object.keys(weatherTypeOccurrences).includes(weatherType)) return;
+
+    let count = 0;
+    weatherTypes.forEach(element => {
+      if (weatherType === element) count++;
+    });
+    weatherTypeOccurrences.weatherType = count;
+  });
+
+  // if there isn't a most frequent weather type, return the weather at mid-day
+  const occurrences = Object.keys(weatherTypeOccurrences);
+  const uniqueOccurrences = new Set(occurrences);
+  if (occurrences.length != uniqueOccurrences.length) {
+    const orderedDailyWeather = dailyWeather.sort((a, b) =>
+      a.time > b.time ? 1 : -1
+    );
+    const midDayWeatherCode =
+      orderedDailyWeather[Math.round(orderedDailyWeather.length)].weatherCode;
+    return mapWeatherCodeToWeatherType(midDayWeatherCode);
+  }
+
+  // return the most frequent weather type
+  const largestOccurrenceValue = Math.max(
+    ...Object.values(weatherTypeOccurrences)
+  );
+  const weatherType = Object.keys(weatherTypeOccurrences).find(
+    key => weatherTypeOccurrences[key] === largestOccurrenceValue
+  );
+  return weatherType;
 };
