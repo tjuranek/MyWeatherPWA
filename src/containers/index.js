@@ -1,3 +1,4 @@
-import { WeatherCard } from "./weather-card";
+import { AddLocationForm } from './add-location-form';
+import { WeatherCard } from './weather-card';
 
-export { WeatherCard };
+export { AddLocationForm, WeatherCard };

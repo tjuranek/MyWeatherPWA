@@ -1,16 +1,44 @@
-import React from "react";
-import { CurrentConditions, Forecast } from "../components";
+import React, { useEffect, useState } from 'react';
+import { CurrentConditions, Forecast } from '../components';
+import { getWeatherForLocation } from '../services';
 
 export const WeatherCard = props => {
-	const { weather } = props;
+	const { city, state } = props;
+
+	const [componentState, setComponentState] = useState({
+		weatherData: {},
+		isLoading: true
+	});
+
+	useEffect(() => {
+		const getWeather = async () => {
+			const data = await getWeatherForLocation(city, state);
+			setComponentState({
+				...componentState,
+				weatherData: { ...data },
+				isLoading: false
+			});
+		};
+
+		getWeather();
+	}, [componentState]);
 
 	return (
 		<>
-			<CurrentConditions
-				tempCurrent={weather.currentConditions.tempCurrent}
-			/>
+			{componentState.isLoading ? (
+				<p>loading</p>
+			) : (
+				<>
+					<CurrentConditions
+						tempCurrent={
+							componentState.weatherData.currentConditions
+								.tempCurrent
+						}
+					/>
 
-			<Forecast forecast={weather.forecast} />
+					<Forecast forecast={componentState.weatherData.forecast} />
+				</>
+			)}
 		</>
 	);
 };
