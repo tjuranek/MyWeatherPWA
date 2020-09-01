@@ -1,5 +1,5 @@
-import axios from "axios";
-import { WEATHER_TYPES, WWO_CODES } from "../constants";
+import axios from 'axios';
+import { WEATHER_TYPES, WWO_CODES } from '../constants';
 
 export const getWeatherForLocation = async (city, state) => {
 	try {
@@ -7,12 +7,16 @@ export const getWeatherForLocation = async (city, state) => {
 		const response = await axios.get(url);
 
 		if (response.status !== 200)
-			throw new Error("Failed to get weather data.");
+			throw new Error('Failed to get weather data.');
 
 		const data = response.data;
 
 		const currentConditions = {
-			tempCurrent: data.current_condition[0].temp_F
+			tempCurrent: data.current_condition[0].temp_F,
+			feelsLike: data.current_condition[0].FeelsLikeC,
+			chanceOfRain: Math.max(
+				...data.weather[0].hourly.map(hourly => hourly.chanceofrain)
+			)
 		};
 
 		const forecast = data.weather.map(data =>

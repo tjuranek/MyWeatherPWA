@@ -30,9 +30,8 @@ export const WeatherCard = props => {
 			) : (
 				<>
 					<CurrentConditions
-						tempCurrent={
+						currentConditions={
 							componentState.weatherData.currentConditions
-								.tempCurrent
 						}
 					/>
 

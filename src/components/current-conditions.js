@@ -1,11 +1,13 @@
-import React from "react";
+import React from 'react';
 
 export const CurrentConditions = props => {
-	const { tempCurrent } = props;
+	const { currentConditions } = props;
 
 	return (
 		<>
-			<h1>{tempCurrent}</h1>
+			<h1>{currentConditions.tempCurrent}</h1>
+			<h3>{currentConditions.chanceOfRain}%</h3>
+			<h3>{currentConditions.feelsLike}a</h3>
 		</>
 	);
 };
