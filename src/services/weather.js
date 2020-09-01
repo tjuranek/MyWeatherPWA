@@ -13,10 +13,13 @@ export const getWeatherForLocation = async (city, state) => {
 
 		const currentConditions = {
 			tempCurrent: data.current_condition[0].temp_F,
-			feelsLike: data.current_condition[0].FeelsLikeC,
+			feelsLike: data.current_condition[0].FeelsLikeF,
 			chanceOfRain: Math.max(
 				...data.weather[0].hourly.map(hourly => hourly.chanceofrain)
-			)
+			),
+			weatherDescription: getDailyForecast(data.weather[0].hourly)
+				.weatherDescription,
+			weatherType: WEATHER_TYPES.CLOUDY
 		};
 
 		const forecast = data.weather.map(data =>
