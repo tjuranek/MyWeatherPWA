@@ -12,3 +12,5 @@ create-react-app
     icon for the weather
 
     three day forcast with high/low on wttr.in site
+
+- CAP therom

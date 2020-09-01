@@ -10,17 +10,11 @@ export const getWeatherForLocation = async (city, state) => {
 
     const data = response.data;
 
-    const currentDateForecast = getDailyForecast(data.weather[0].hourly);
     const currentConditions = {
-      ...currentDateForecast,
       tempCurrent: data.current_condition[0].temp_F
     };
 
-    const forecast = [
-      getDailyForecast(data.weather[1].hourly),
-      getDailyForecast(data.weather[2].hourly)
-      //(data.weather[3].hourly)
-    ];
+    const forecast = data.weather.map(data => getDailyForecast(data.hourly));
 
     return {
       currentConditions: currentConditions,
