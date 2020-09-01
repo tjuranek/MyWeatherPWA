@@ -16,9 +16,13 @@ export const AddLocationForm = () => {
 	const [state, setState] = useState(initalState);
 	const [locations, setLocations] = useLocalStorage('locations', []);
 
-	const handleCityChange = event => {};
+	const handleCityChange = event => {
+		setState({ ...state, city: event.target.value });
+	};
 
-	const handleStateChange = event => {};
+	const handleStateChange = event => {
+		setState({ ...state, state: event.target.value });
+	};
 
 	const handleAddLocationButtonClick = () => {
 		setState({ ...state, displayState: DISPLAY_STATES.SHOW_FORM });
@@ -37,8 +41,8 @@ export const AddLocationForm = () => {
 
 			{state.displayState == DISPLAY_STATES.SHOW_FORM && (
 				<>
-					<input type="text"></input>
-					<input type="text"></input>
+					<input type="text" onChange={handleCityChange}></input>
+					<input type="text" onChange={handleStateChange}></input>
 					<button onClick={handleSaveNewLocationButtonClick}>
 						save
 					</button>
