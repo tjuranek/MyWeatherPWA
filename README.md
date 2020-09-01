@@ -13,4 +13,4 @@ create-react-app
 
     three day forcast with high/low on wttr.in site
 
-- CAP therom
+-   CAP therom
