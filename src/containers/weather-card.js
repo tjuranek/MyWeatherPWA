@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+import { useEffect, useState, Fragment } from 'react';
 import { CurrentConditions, Forecast } from '../components';
 import { getWeatherForLocation } from '../services';
 
@@ -23,12 +25,18 @@ export const WeatherCard = props => {
 		getWeather();
 	}, [componentState]);
 
+	const styles = {
+		container: {
+			border: '1px solid black'
+		}
+	};
+
 	return (
-		<>
+		<div css={styles.container}>
 			{componentState.isLoading ? (
 				<p>loading</p>
 			) : (
-				<>
+				<Fragment>
 					<CurrentConditions
 						currentConditions={
 							componentState.weatherData.currentConditions
@@ -36,8 +44,8 @@ export const WeatherCard = props => {
 					/>
 
 					<Forecast forecast={componentState.weatherData.forecast} />
-				</>
+				</Fragment>
 			)}
-		</>
+		</div>
 	);
 };
