@@ -23,7 +23,7 @@ export const WeatherCard = props => {
 		};
 
 		getWeather();
-	}, [componentState]);
+	}, [componentState, city, state]);
 
 	const styles = {
 		container: {

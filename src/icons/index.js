@@ -17,5 +17,7 @@ export const getIconFromWeatherType = weatherType => {
 			return stormy;
 		case WEATHER_TYPES.SUNNY:
 			return sunny;
+		default:
+			return;
 	}
 };

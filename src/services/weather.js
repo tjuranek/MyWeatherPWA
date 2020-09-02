@@ -85,7 +85,7 @@ const getDailyWeatherType = dailyWeather => {
 	// if there isn't a most frequent weather type, return the weather at mid-day
 	const occurrences = Object.keys(weatherTypeOccurrences);
 	const uniqueOccurrences = new Set(occurrences);
-	if (occurrences.length != uniqueOccurrences.length) {
+	if (occurrences.length !== uniqueOccurrences.length) {
 		const orderedDailyWeather = dailyWeather.sort((a, b) =>
 			a.time > b.time ? 1 : -1
 		);

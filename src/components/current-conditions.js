@@ -49,6 +49,7 @@ export const CurrentConditions = props => {
 				</div>
 				<div css={styles.column}>
 					<img
+						alt={'test'}
 						css={styles.icon}
 						src={getIconFromWeatherType(
 							currentConditions.weatherType

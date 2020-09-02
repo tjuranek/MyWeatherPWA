@@ -35,11 +35,11 @@ export const AddLocationForm = () => {
 
 	return (
 		<>
-			{state.displayState == DISPLAY_STATES.SHOW_BUTTON && (
+			{state.displayState === DISPLAY_STATES.SHOW_BUTTON && (
 				<button onClick={handleAddLocationButtonClick}>click me</button>
 			)}
 
-			{state.displayState == DISPLAY_STATES.SHOW_FORM && (
+			{state.displayState === DISPLAY_STATES.SHOW_FORM && (
 				<>
 					<input type="text" onChange={handleCityChange}></input>
 					<input type="text" onChange={handleStateChange}></input>
