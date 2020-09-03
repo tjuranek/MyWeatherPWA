@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { useLocalStorage } from '../hooks';
 
 const DISPLAY_STATES = {
