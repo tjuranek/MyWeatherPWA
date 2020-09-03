@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+import { useState, Fragment } from 'react';
 import { useLocalStorage } from '../hooks';
 
 const DISPLAY_STATES = {
@@ -29,25 +31,71 @@ export const AddLocationForm = () => {
 	};
 
 	const handleSaveNewLocationButtonClick = () => {
-		setLocations([...locations, `${state.city},${state.state}`]);
+		if (state.city && state.state)
+			setLocations([...locations, `${state.city},${state.state}`]);
 		setState(initalState);
 	};
 
+	const styles = {
+		container: {
+			marginLeft: '25%',
+			marginRight: '25%',
+			padding: '1rem',
+			width: '50%'
+		},
+		addLocationButton: {
+			width: '100%'
+		},
+		form: {
+			display: 'flex',
+			justifyContent: 'space-evenly',
+			alignItems: 'center'
+		},
+		formInput: {
+			flexGrow: '2',
+			margin: '.5rem',
+			padding: '1rem'
+		},
+		formButton: {
+			flexGrow: '1',
+			margin: '.5rem',
+			padding: '1rem'
+		}
+	};
+
 	return (
-		<>
+		<div css={styles.container}>
 			{state.displayState === DISPLAY_STATES.SHOW_BUTTON && (
-				<button onClick={handleAddLocationButtonClick}>click me</button>
+				<button
+					css={styles.addLocationButton}
+					onClick={handleAddLocationButtonClick}
+				>
+					Add Location
+				</button>
 			)}
 
 			{state.displayState === DISPLAY_STATES.SHOW_FORM && (
-				<>
-					<input type="text" onChange={handleCityChange}></input>
-					<input type="text" onChange={handleStateChange}></input>
-					<button onClick={handleSaveNewLocationButtonClick}>
-						save
+				<div css={styles.form}>
+					<input
+						css={styles.formInput}
+						placeholder={'City: Roseville'}
+						type="text"
+						onChange={handleCityChange}
+					></input>
+					<input
+						css={styles.formInput}
+						placeholder={'State: Minnesota'}
+						type="text"
+						onChange={handleStateChange}
+					></input>
+					<button
+						css={styles.formButton}
+						onClick={handleSaveNewLocationButtonClick}
+					>
+						Save
 					</button>
-				</>
+				</div>
 			)}
-		</>
+		</div>
 	);
 };
