@@ -2,10 +2,10 @@
 import { jsx } from '@emotion/core';
 import { useEffect, useState, Fragment } from 'react';
 import { CurrentConditions, Forecast } from '../components';
-import { getWeatherForLocation } from '../services';
+import { getWeatherForLocation } from '../services/weather';
 
 export const WeatherCard = props => {
-	const { city, state } = props;
+	const { id, city, state } = props;
 
 	const [componentState, setComponentState] = useState({
 		weatherData: {},
@@ -36,7 +36,7 @@ export const WeatherCard = props => {
 			{componentState.isLoading ? (
 				<p>loading</p>
 			) : (
-				<Fragment>
+				<Fragment key={id}>
 					<CurrentConditions
 						currentConditions={
 							componentState.weatherData.currentConditions

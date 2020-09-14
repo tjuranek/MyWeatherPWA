@@ -1,14 +1,16 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useState } from 'react';
-import { useLocalStorage } from '../hooks';
+import { useLocalStorage } from '../hooks/use-local-storage';
 
 const DISPLAY_STATES = {
 	SHOW_BUTTON: 'SHOW_BUTTON',
 	SHOW_FORM: 'SHOW_FORM'
 };
 
-export const AddLocationForm = () => {
+export const AddLocationForm = props => {
+	const { addLocation } = props;
+
 	const initalState = {
 		displayState: DISPLAY_STATES.SHOW_BUTTON,
 		city: '',
@@ -31,8 +33,10 @@ export const AddLocationForm = () => {
 	};
 
 	const handleSaveNewLocationButtonClick = () => {
-		if (state.city && state.state)
-			setLocations([...locations, `${state.city},${state.state}`]);
+		if (state.city && state.state) {
+			addLocation(state.city, state.state);
+		}
+
 		setState(initalState);
 	};
 

@@ -1,10 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+import { useContext } from 'react';
+import { AppContext } from '../app';
 import { AddLocationForm, WeatherCard } from '../containers';
-import { useLocalStorage } from '../hooks';
+import { APP_ACTIONS } from '../reducers/app';
+import { generateGuid } from '../services/guid';
 
 export const Home = () => {
-	const [locations] = useLocalStorage('locations', []);
+	const { state, dispatch } = useContext(AppContext);
 
 	const styles = {
 		container: {
@@ -16,16 +19,35 @@ export const Home = () => {
 			textAlign: 'center'
 		}
 	};
+
+	const addLocation = (city, state) => {
+		const location = {
+			id: generateGuid(),
+			city: city,
+			state: state
+		};
+
+		dispatch({
+			type: APP_ACTIONS.ADD_LOCATION,
+			payload: location
+		});
+	};
+
 	return (
 		<div css={styles.container}>
 			<h1 css={styles.header}>Mon, Aug 28th</h1>
 
-			{locations.map(location => {
-				const [city, state] = location.split(',');
-				return <WeatherCard city={city} state={state} />;
+			{state.locations.map(location => {
+				return (
+					<WeatherCard
+						id={location.id}
+						city={location.city}
+						state={location.state}
+					/>
+				);
 			})}
 
-			<AddLocationForm />
+			<AddLocationForm addLocation={addLocation} />
 		</div>
 	);
 };
