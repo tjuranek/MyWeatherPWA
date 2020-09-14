@@ -9,6 +9,7 @@ export const App = () => {
 	const [locations, setLocations] = useLocalStorage('locations', []);
 	const [state, dispatch] = useReducer(appReducer, initialState);
 
+	// hydrate app reducer locations with local storage locations on initial render
 	useEffect(() => {
 		dispatch({
 			type: APP_ACTIONS.SET_LOCATIONS,
@@ -16,6 +17,7 @@ export const App = () => {
 		});
 	}, []);
 
+	// keep local storage locations congruent with the reducer locations
 	useEffect(() => {
 		setLocations(state.locations);
 	}, [state.locations]);
