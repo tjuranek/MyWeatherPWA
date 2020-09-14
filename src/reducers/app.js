@@ -18,6 +18,14 @@ export const appReducer = (state = initialState, action) => {
 					: [action.payload]
 			};
 		}
+		case APP_ACTIONS.REMOVE_LOCATION: {
+			return {
+				...state,
+				locations: state.locations.filter(
+					location => location.id !== action.payload
+				)
+			};
+		}
 		case APP_ACTIONS.SET_LOCATIONS: {
 			return { ...state, locations: action.payload };
 		}

@@ -18,7 +18,6 @@ export const AddLocationForm = props => {
 	};
 
 	const [state, setState] = useState(initalState);
-	const [locations, setLocations] = useLocalStorage('locations', []);
 
 	const handleCityChange = event => {
 		setState({ ...state, city: event.target.value });

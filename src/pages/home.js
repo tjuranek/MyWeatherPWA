@@ -33,6 +33,13 @@ export const Home = () => {
 		});
 	};
 
+	const removeLocation = id => {
+		dispatch({
+			type: APP_ACTIONS.REMOVE_LOCATION,
+			payload: id
+		});
+	};
+
 	return (
 		<div css={styles.container}>
 			<h1 css={styles.header}>Mon, Aug 28th</h1>
@@ -43,6 +50,7 @@ export const Home = () => {
 						id={location.id}
 						city={location.city}
 						state={location.state}
+						remove={removeLocation}
 					/>
 				);
 			})}
