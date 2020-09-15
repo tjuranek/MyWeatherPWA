@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import { APP_ACTIONS, appReducer, initialState } from './reducers/app';
-import { Home } from './pages/home';
 import { useLocalStorage } from './hooks/use-local-storage';
+import { Router } from './router';
 
 export const AppContext = createContext();
 
@@ -24,7 +24,7 @@ export const App = () => {
 
 	return (
 		<AppContext.Provider value={{ state, dispatch }}>
-			<Home />
+			<Router />
 		</AppContext.Provider>
 	);
 };

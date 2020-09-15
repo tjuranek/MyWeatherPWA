@@ -9,7 +9,5 @@ import { generateGuid } from '../services/guid';
 export const Settings = () => {
 	const { state, dispatch } = useContext(AppContext);
 
-	return (
-
-	);
+	return <h3>settings</h3>;
 };
