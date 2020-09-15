@@ -1,6 +1,48 @@
 import axios from 'axios';
 import { WEATHER_TYPES } from '../constants/weather-types';
 import { WWO_CODES } from '../constants/wwo-codes';
+import { generateGuid } from '../services/guid';
+
+export const getCurrentLocation = async () => {
+	try {
+		const cityUrl = `https://wttr.in?format=3`;
+		const cityResponse = await axios.get(cityUrl);
+
+		if (cityResponse.status !== 200) {
+			throw new Error('Failed to get current city.');
+		}
+
+		const cityStartIndex = 0;
+		const cityEndIndex = cityResponse.data.indexOf(', ');
+		const city = cityResponse.data.substring(cityStartIndex, cityEndIndex);
+		const regionStartIndex = cityEndIndex + 2;
+		const regionEndIndex = cityResponse.data.indexOf(':');
+		const region = cityResponse.data.substring(
+			regionStartIndex,
+			regionEndIndex
+		);
+
+		const stateUrl = `https://wttr.in/~${city}+${region}?format=j1`;
+		const stateResponse = await axios.get(stateUrl);
+
+		if (stateResponse.status !== 200) {
+			throw new Error('Failed to get current state.');
+		}
+
+		const state = stateResponse.data.nearest_area[0].region[0].value;
+
+		debugger;
+
+		return {
+			id: generateGuid(),
+			city: city,
+			state: state
+		};
+	} catch (error) {
+		console.error(error);
+		return undefined;
+	}
+};
 
 export const getWeatherForLocation = async (city, state) => {
 	try {
@@ -33,7 +75,7 @@ export const getWeatherForLocation = async (city, state) => {
 		};
 	} catch (error) {
 		console.error(error);
-		return {};
+		return undefined;
 	}
 };
 

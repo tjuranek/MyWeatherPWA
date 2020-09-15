@@ -3,9 +3,12 @@ import { jsx } from '@emotion/core';
 import { useContext } from 'react';
 import { AppContext } from '../app';
 import { WeatherCard } from '../containers/weather-card';
+import { getCurrentLocation } from '../services/weather';
 
 export const Home = () => {
 	const { state, dispatch } = useContext(AppContext);
+
+	const currentLocation = getCurrentLocation();
 
 	const styles = {
 		container: {
@@ -20,7 +23,10 @@ export const Home = () => {
 
 	return (
 		<div css={styles.container}>
-			<h1 css={styles.header}>Mon, Aug 28th</h1>
+			<h1 css={styles.header}>
+				{currentLocation.id} {currentLocation.city}{' '}
+				{currentLocation.state}
+			</h1>
 
 			{state.locations.map(location => {
 				return (
