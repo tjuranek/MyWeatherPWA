@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core';
 import { useContext } from 'react';
 import { AppContext } from '../app';
 import { AddLocationForm, WeatherCard } from '../containers';
+import { LocationsList } from '../containers/locations-list';
 import { APP_ACTIONS } from '../reducers/app';
 import { generateGuid } from '../services/guid';
 
@@ -56,6 +57,12 @@ export const Home = () => {
 			})}
 
 			<AddLocationForm addLocation={addLocation} />
+
+			<LocationsList
+				locations={state.locations}
+				handleAddLocation={addLocation}
+				handleDeleteLocation={removeLocation}
+			/>
 		</div>
 	);
 };
