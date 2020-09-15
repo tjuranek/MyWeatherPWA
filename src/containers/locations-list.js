@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/core';
 import { Fragment } from 'react';
 import { ListItem } from '../components/list-item';
+import { AddLocationForm } from './add-location-form';
 
 export const LocationsList = props => {
 	const { handleAddLocation, handleDeleteLocation, locations } = props;
@@ -14,6 +15,8 @@ export const LocationsList = props => {
 					label={`${location.city}, ${location.state}`}
 				/>
 			))}
+
+			<AddLocationForm addLocation={handleAddLocation} />
 		</Fragment>
 	);
 };

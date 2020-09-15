@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useState } from 'react';
-import { useLocalStorage } from '../hooks/use-local-storage';
 
 const DISPLAY_STATES = {
 	SHOW_BUTTON: 'SHOW_BUTTON',

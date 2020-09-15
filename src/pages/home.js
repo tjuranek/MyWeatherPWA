@@ -2,10 +2,7 @@
 import { jsx } from '@emotion/core';
 import { useContext } from 'react';
 import { AppContext } from '../app';
-import { AddLocationForm, WeatherCard } from '../containers';
-import { LocationsList } from '../containers/locations-list';
-import { APP_ACTIONS } from '../reducers/app';
-import { generateGuid } from '../services/guid';
+import { WeatherCard } from '../containers/weather-card';
 
 export const Home = () => {
 	const { state, dispatch } = useContext(AppContext);
@@ -21,26 +18,6 @@ export const Home = () => {
 		}
 	};
 
-	const addLocation = (city, state) => {
-		const location = {
-			id: generateGuid(),
-			city: city,
-			state: state
-		};
-
-		dispatch({
-			type: APP_ACTIONS.ADD_LOCATION,
-			payload: location
-		});
-	};
-
-	const removeLocation = id => {
-		dispatch({
-			type: APP_ACTIONS.REMOVE_LOCATION,
-			payload: id
-		});
-	};
-
 	return (
 		<div css={styles.container}>
 			<h1 css={styles.header}>Mon, Aug 28th</h1>
@@ -51,18 +28,9 @@ export const Home = () => {
 						id={location.id}
 						city={location.city}
 						state={location.state}
-						remove={removeLocation}
 					/>
 				);
 			})}
-
-			<AddLocationForm addLocation={addLocation} />
-
-			<LocationsList
-				locations={state.locations}
-				handleAddLocation={addLocation}
-				handleDeleteLocation={removeLocation}
-			/>
 		</div>
 	);
 };

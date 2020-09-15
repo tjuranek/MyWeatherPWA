@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { getIconFromWeatherType } from '../icons';
+import { getIconFromWeatherType } from '../services/icons';
 
 export const CurrentConditions = props => {
 	const { currentConditions } = props;

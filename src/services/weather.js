@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { WEATHER_TYPES, WWO_CODES } from '../constants';
+import { WEATHER_TYPES } from '../constants/weather-types';
+import { WWO_CODES } from '../constants/wwo-codes';
 
 export const getWeatherForLocation = async (city, state) => {
 	try {

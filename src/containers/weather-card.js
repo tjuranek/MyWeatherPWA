@@ -1,11 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useEffect, useState, Fragment } from 'react';
-import { CurrentConditions, Forecast } from '../components';
+import { CurrentConditions } from '../components/current-conditions';
+import { Forecast } from '../components/forecast';
 import { getWeatherForLocation } from '../services/weather';
 
 export const WeatherCard = props => {
-	const { id, city, state, remove } = props;
+	const { id, city, state } = props;
 
 	const [componentState, setComponentState] = useState({
 		weatherData: {},
@@ -31,10 +32,6 @@ export const WeatherCard = props => {
 		}
 	};
 
-	const handleRemove = () => {
-		remove(id);
-	};
-
 	return (
 		<div css={styles.container}>
 			{componentState.isLoading ? (
@@ -48,8 +45,6 @@ export const WeatherCard = props => {
 					/>
 
 					<Forecast forecast={componentState.weatherData.forecast} />
-
-					<button onClick={handleRemove}>remove</button>
 				</Fragment>
 			)}
 		</div>
