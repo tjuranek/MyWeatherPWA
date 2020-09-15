@@ -31,8 +31,6 @@ export const getCurrentLocation = async () => {
 
 		const state = stateResponse.data.nearest_area[0].region[0].value;
 
-		debugger;
-
 		return {
 			id: generateGuid(),
 			city: city,

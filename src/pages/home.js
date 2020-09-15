@@ -8,7 +8,7 @@ import { getCurrentLocation } from '../services/weather';
 export const Home = () => {
 	const { state, dispatch } = useContext(AppContext);
 
-	const currentLocation = getCurrentLocation();
+	const locations = [state.currentLocation, ...state.locations];
 
 	const styles = {
 		container: {
@@ -24,11 +24,11 @@ export const Home = () => {
 	return (
 		<div css={styles.container}>
 			<h1 css={styles.header}>
-				{currentLocation.id} {currentLocation.city}{' '}
-				{currentLocation.state}
+				{state.currentLocation.id} {state.currentLocation.city}{' '}
+				{state.currentLocation.state}
 			</h1>
 
-			{state.locations.map(location => {
+			{locations.map(location => {
 				return (
 					<WeatherCard
 						id={location.id}

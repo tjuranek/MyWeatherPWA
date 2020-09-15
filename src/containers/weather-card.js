@@ -38,6 +38,9 @@ export const WeatherCard = props => {
 				<p>loading</p>
 			) : (
 				<Fragment key={id}>
+					<p>
+						{city}, {state}
+					</p>
 					<CurrentConditions
 						currentConditions={
 							componentState.weatherData.currentConditions
