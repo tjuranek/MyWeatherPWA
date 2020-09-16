@@ -2,9 +2,16 @@
 import { jsx } from '@emotion/core';
 
 export const ListItem = props => {
-	const { label, handleDelete } = props;
+	const { id, label, handleDelete } = props;
 
+	const handleDeleteItem = () => {
+		handleDelete(id);
+	};
 	const styles = {};
 
-	return <div>{label}</div>;
+	return (
+		<div>
+			{label} <button onClick={handleDeleteItem}>Remove</button>
+		</div>
+	);
 };

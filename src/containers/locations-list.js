@@ -11,6 +11,7 @@ export const LocationsList = props => {
 		<Fragment>
 			{locations.map(location => (
 				<ListItem
+					id={location.id}
 					handleDelete={handleDeleteLocation}
 					label={`${location.city}, ${location.state}`}
 				/>
