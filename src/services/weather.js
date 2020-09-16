@@ -7,24 +7,21 @@ export const getCurrentLocation = async () => {
 	try {
 		const cityUrl = `https://wttr.in?format=3`;
 		const cityResponse = await axios.get(cityUrl);
-
 		if (cityResponse.status !== 200) {
 			throw new Error('Failed to get current city.');
 		}
 
-		const cityStartIndex = 0;
-		const cityEndIndex = cityResponse.data.indexOf(', ');
-		const city = cityResponse.data.substring(cityStartIndex, cityEndIndex);
-		const regionStartIndex = cityEndIndex + 2;
-		const regionEndIndex = cityResponse.data.indexOf(':');
+		const city = cityResponse.data.substring(
+			0,
+			cityResponse.data.indexOf(', ')
+		);
 		const region = cityResponse.data.substring(
-			regionStartIndex,
-			regionEndIndex
+			cityResponse.data.indexOf(', ') + 2,
+			cityResponse.data.indexOf(':')
 		);
 
 		const stateUrl = `https://wttr.in/~${city}+${region}?format=j1`;
 		const stateResponse = await axios.get(stateUrl);
-
 		if (stateResponse.status !== 200) {
 			throw new Error('Failed to get current state.');
 		}
@@ -46,26 +43,20 @@ export const getWeatherForLocation = async (city, state) => {
 	try {
 		const url = `https://wttr.in/~${city}+${state}?format=j1`;
 		const response = await axios.get(url);
-
-		if (response.status !== 200)
+		if (response.status !== 200) {
 			throw new Error('Failed to get weather data.');
+		}
 
-		const data = response.data;
-
-		const currentConditions = {
-			tempCurrent: data.current_condition[0].temp_F,
-			feelsLike: data.current_condition[0].FeelsLikeF,
-			chanceOfRain: Math.max(
-				...data.weather[0].hourly.map(hourly => hourly.chanceofrain)
-			),
-			weatherDescription: getDailyForecast(data.weather[0].hourly)
-				.weatherDescription,
-			weatherType: WEATHER_TYPES.CLOUDY
-		};
-
-		const forecast = data.weather.map(data =>
+		const forecast = response.data.weather.map(data =>
 			getDailyForecast(data.hourly)
 		);
+		const currentConditions = {
+			chanceOfRain: forecast[0].chanceOfRain,
+			feelsLike: response.data.current_condition[0].FeelsLikeF,
+			tempCurrent: response.data.current_condition[0].temp_F,
+			weatherDescription: forecast[0].weatherDescription,
+			weatherType: forecast[0].weatherType
+		};
 
 		return {
 			currentConditions: currentConditions,
@@ -78,31 +69,24 @@ export const getWeatherForLocation = async (city, state) => {
 };
 
 const getDailyForecast = dailyWeather => {
-	const hourlyTemps = dailyWeather.map(hourly => hourly.tempF);
-	const tempHigh = Math.max(...hourlyTemps);
-	const tempLow = Math.min(...hourlyTemps);
-	const weatherDescription = getDailyWeatherType(dailyWeather);
+	const chanceOfRain = Math.max(
+		...dailyWeather.map(hourly => hourly.chanceofrain)
+	);
+	const tempHigh = Math.max(...dailyWeather.map(hourly => hourly.tempF));
+	const tempLow = Math.min(...dailyWeather.map(hourly => hourly.tempF));
+	const weatherType = getWeatherType(dailyWeather);
 
+	debugger;
 	return {
+		chanceOfRain: chanceOfRain,
 		tempHigh: tempHigh,
 		tempLow: tempLow,
-		weatherDescription: weatherDescription
+		weatherType: weatherType,
+		weatherDescription: 'cloudy'
 	};
 };
 
-const mapWeatherCodeToWeatherType = weatherCode => {
-	let weatherType = null;
-
-	Object.keys(WWO_CODES).forEach(key => {
-		if (WWO_CODES[key].includes(weatherCode)) {
-			weatherType = WEATHER_TYPES[key];
-		}
-	});
-
-	return weatherType;
-};
-
-const getDailyWeatherType = dailyWeather => {
+const getWeatherType = dailyWeather => {
 	// convert all the codes to weather types, create empty object to store their total occurrence count
 	const weatherCodes = dailyWeather.map(
 		hourlyWeather => hourlyWeather.weatherCode
@@ -144,4 +128,14 @@ const getDailyWeatherType = dailyWeather => {
 		key => weatherTypeOccurrences[key] === largestOccurrenceValue
 	);
 	return weatherType;
+};
+
+const mapWeatherCodeToWeatherType = weatherCode => {
+	Object.keys(WWO_CODES).forEach(key => {
+		if (WWO_CODES[key].includes(weatherCode)) {
+			return WEATHER_TYPES[key];
+		}
+	});
+
+	return null;
 };
