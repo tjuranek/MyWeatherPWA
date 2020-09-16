@@ -5,6 +5,7 @@ import { AppContext } from '../app';
 import { LocationsList } from '../containers/locations-list';
 import { generateGuid } from '../services/guid';
 import { APP_ACTIONS } from '../reducers/app';
+import { FooterMenu } from '../components/footer-menu';
 
 export const Settings = () => {
 	const { state, dispatch } = useContext(AppContext);
@@ -55,6 +56,8 @@ export const Settings = () => {
 				handleAddLocation={addLocation}
 				handleDeleteLocation={removeLocation}
 			/>
+
+			<FooterMenu />
 		</Fragment>
 	);
 };

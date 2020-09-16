@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import { Fragment, useContext, useEffect } from 'react';
 import { AppContext } from '../app';
-import { APP_ACTIONS } from '../reducers/app';
+import { FooterMenu } from '../components/footer-menu';
 import { WeatherCard } from '../containers/weather-card';
 import { getCurrentLocation } from '../services/weather';
 import { useRequest } from '../hooks/use-request';
@@ -41,6 +41,8 @@ export const Home = () => {
 					})}
 				</div>
 			)}
+
+			<FooterMenu />
 		</Fragment>
 	);
 };
