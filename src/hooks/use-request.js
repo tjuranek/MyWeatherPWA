@@ -17,26 +17,32 @@ const requestReducer = (state, action) => {
 	}
 };
 
-export const useRequest = (request, initialData) => {
+export const useRequest = request => {
 	const [state, dispatch] = useReducer(requestReducer, {
-		isLoading: false,
+		data: null,
 		isError: false,
-		data: initialData
+		isLoading: true
 	});
 
 	useEffect(() => {
 		let didComponentUnmount = false;
 
+		if (typeof request == 'function') {
+		}
+
 		const requestData = async () => {
 			dispatch({ type: 'REQUEST_INIT' });
 
 			try {
-				const response = await axios(request);
+				const response =
+					typeof request === 'function'
+						? await request()
+						: await axios(request).data;
 
 				if (!didComponentUnmount) {
 					dispatch({
 						type: 'REQUEST_SUCCESS',
-						payload: response.data
+						payload: response
 					});
 				}
 			} catch (error) {
@@ -54,8 +60,8 @@ export const useRequest = (request, initialData) => {
 	}, []);
 
 	return {
-		isLoading: state.isLoading,
+		data: state.data,
 		isError: state.isError,
-		data: state.data
+		isLoading: state.isLoading
 	};
 };

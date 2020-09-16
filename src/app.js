@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useReducer } from 'react';
 import { APP_ACTIONS, appReducer, initialState } from './reducers/app';
 import { useLocalStorage } from './hooks/use-local-storage';
 import { Router } from './router';
-import { getCurrentLocation } from './services/weather';
 
 export const AppContext = createContext();
 
@@ -16,16 +15,6 @@ export const App = () => {
 
 	// hydrate app reducer locations with local storage locations on initial render
 	useEffect(() => {
-		const getAndSetCurrentLocation = async () => {
-			const currentLocation = await getCurrentLocation();
-			dispatch({
-				type: APP_ACTIONS.SET_CURRENT_LOCATION,
-				payload: currentLocation
-			});
-		};
-
-		getAndSetCurrentLocation();
-
 		dispatch({
 			type: APP_ACTIONS.SET_LOCATIONS,
 			payload: locations

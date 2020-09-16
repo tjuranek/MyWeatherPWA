@@ -4,27 +4,13 @@ import { useEffect, useState, Fragment } from 'react';
 import { CurrentConditions } from '../components/current-conditions';
 import { Forecast } from '../components/forecast';
 import { getWeatherForLocation } from '../services/weather';
+import { useRequest } from '../hooks/use-request';
 
 export const WeatherCard = props => {
 	const { id, city, state } = props;
-
-	const [componentState, setComponentState] = useState({
-		weatherData: {},
-		isLoading: true
-	});
-
-	useEffect(() => {
-		const getWeather = async () => {
-			const data = await getWeatherForLocation(city, state);
-			setComponentState({
-				...componentState,
-				weatherData: { ...data },
-				isLoading: false
-			});
-		};
-
-		getWeather();
-	}, [componentState, city, state]);
+	const { data, isError, isLoading } = useRequest(() =>
+		getWeatherForLocation(city, state)
+	);
 
 	const styles = {
 		container: {
@@ -34,7 +20,7 @@ export const WeatherCard = props => {
 
 	return (
 		<div css={styles.container}>
-			{componentState.isLoading ? (
+			{isLoading ? (
 				<p>loading</p>
 			) : (
 				<Fragment key={id}>
@@ -42,12 +28,10 @@ export const WeatherCard = props => {
 						{city}, {state}
 					</p>
 					<CurrentConditions
-						currentConditions={
-							componentState.weatherData.currentConditions
-						}
+						currentConditions={data.currentConditions}
 					/>
 
-					<Forecast forecast={componentState.weatherData.forecast} />
+					<Forecast forecast={data.forecast} />
 				</Fragment>
 			)}
 		</div>
