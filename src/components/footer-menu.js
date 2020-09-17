@@ -14,18 +14,23 @@ export const FooterMenu = () => {
 			flexGrow: 1
 		},
 		text: {
-			color: '#ffffff'
+			color: '#ffffff',
+			lineHeight: '1rem'
 		}
 	};
 
 	return (
 		<div css={styles.container}>
-			<Link css={styles.section} to="/">
-				<p css={styles.text}>Home</p>
-			</Link>
-			<Link css={styles.section} to="/settings">
-				<p css={styles.text}>Settings</p>
-			</Link>
+			<div css={styles.section}>
+				<p css={styles.text}>
+					<Link to="/">Home</Link>
+				</p>
+			</div>
+			<div css={styles.section}>
+				<p css={styles.text}>
+					<Link to="/settings">Settings</Link>
+				</p>
+			</div>
 		</div>
 	);
 };
