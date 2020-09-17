@@ -76,13 +76,11 @@ const getDailyForecast = dailyWeather => {
 	const tempLow = Math.min(...dailyWeather.map(hourly => hourly.tempF));
 	const weatherType = getWeatherType(dailyWeather);
 
-	debugger;
 	return {
 		chanceOfRain: chanceOfRain,
 		tempHigh: tempHigh,
 		tempLow: tempLow,
-		weatherType: weatherType,
-		weatherDescription: 'cloudy'
+		weatherType: weatherType
 	};
 };
 
@@ -92,7 +90,7 @@ const getWeatherType = dailyWeather => {
 		hourlyWeather => hourlyWeather.weatherCode
 	);
 	const weatherTypes = weatherCodes.map(code =>
-		mapWeatherCodeToWeatherType(code)
+		convertWeatherCodeToWeatherType(code)
 	);
 	let weatherTypeOccurrences = {};
 
@@ -117,7 +115,7 @@ const getWeatherType = dailyWeather => {
 		const midDayWeatherCode =
 			orderedDailyWeather[Math.round(orderedDailyWeather.length / 2)]
 				.weatherCode;
-		return mapWeatherCodeToWeatherType(midDayWeatherCode);
+		return convertWeatherCodeToWeatherType(midDayWeatherCode);
 	}
 
 	// return the most frequent weather type
@@ -130,12 +128,18 @@ const getWeatherType = dailyWeather => {
 	return weatherType;
 };
 
-const mapWeatherCodeToWeatherType = weatherCode => {
+const convertWeatherCodeToWeatherType = weatherCode => {
+	let response = null;
+
 	Object.keys(WWO_CODES).forEach(key => {
 		if (WWO_CODES[key].includes(weatherCode)) {
-			return WEATHER_TYPES[key];
+			response = WEATHER_TYPES[key];
 		}
 	});
 
-	return null;
+	return response;
+};
+
+const convertWeatherTypeToWeatherDescription = weatherType => {
+	return WEATHER_TYPES[weatherType];
 };

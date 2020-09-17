@@ -24,7 +24,7 @@ export const Forecast = props => {
 					<div css={styles.column}>
 						<p>high: {day.tempHigh}</p>
 						<p>low: {day.tempLow}</p>
-						<p>description: {day.weatherDescription}</p>
+						<p>description: {day.weatherType}</p>
 					</div>
 				);
 			})}
