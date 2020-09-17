@@ -7,7 +7,6 @@ export const ListItem = props => {
 	const handleDeleteItem = () => {
 		handleDelete(id);
 	};
-	const styles = {};
 
 	return (
 		<div>

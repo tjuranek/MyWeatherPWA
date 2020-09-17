@@ -45,7 +45,7 @@ export const Settings = () => {
 				<input
 					type="checkbox"
 					checked={state.isCurrentLocationEnabled}
-					onClick={toggleIsCurrentLocationEnabled}
+					onChange={toggleIsCurrentLocationEnabled}
 				/>
 			</div>
 

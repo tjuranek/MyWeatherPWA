@@ -139,7 +139,3 @@ const convertWeatherCodeToWeatherType = weatherCode => {
 
 	return response;
 };
-
-const convertWeatherTypeToWeatherDescription = weatherType => {
-	return WEATHER_TYPES[weatherType];
-};

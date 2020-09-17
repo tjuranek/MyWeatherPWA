@@ -10,11 +10,13 @@ export const LocationsList = props => {
 	return (
 		<Fragment>
 			{locations.map(location => (
-				<ListItem
-					id={location.id}
-					handleDelete={handleDeleteLocation}
-					label={`${location.city}, ${location.state}`}
-				/>
+				<Fragment key={location.id}>
+					<ListItem
+						id={location.id}
+						handleDelete={handleDeleteLocation}
+						label={`${location.city}, ${location.state}`}
+					/>
+				</Fragment>
 			))}
 
 			<AddLocationForm addLocation={handleAddLocation} />

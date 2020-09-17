@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment, useContext } from 'react';
 import { AppContext } from '../app';
 import { FooterMenu } from '../components/footer-menu';
 import { WeatherCard } from '../containers/weather-card';
@@ -32,11 +32,13 @@ export const Home = () => {
 				<div css={styles.container}>
 					{locations.map(location => {
 						return (
-							<WeatherCard
-								id={location.id}
-								city={location.city}
-								state={location.state}
-							/>
+							<Fragment key={location.id}>
+								<WeatherCard
+									id={location.id}
+									city={location.city}
+									state={location.state}
+								/>
+							</Fragment>
 						);
 					})}
 				</div>
