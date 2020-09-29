@@ -43,41 +43,29 @@ export const AddLocationForm = props => {
 			background: '#3C47E9',
 			border: '1px solid #E7E7EB',
 			color: '#E7E7EB',
-			fontSize: '1em',
 			height: '2em',
 			lineHeight: '2em',
-			minWidth: '25%',
+			margin: '1em 0',
 			outline: 'none'
 		},
-		addLocationButton: {
-			margin: '1em 0'
-		},
-		form: {
-			display: 'flex',
-			justifyContent: 'space-evenly',
-			alignItems: 'center',
-			margin: '1em 0'
-		},
-		formInput: {
+		input: {
 			background: '#1E213A',
 			border: '1px solid #E7E7EB',
 			color: '#E7E7EB',
-			flexGrow: '2',
-			marginRight: '.5em',
-			padding: '.5em .25em',
+			display: 'block',
+			height: '2em',
+			lineHeight: '2em',
+			marginTop: '1em',
 			'&::placeholder': {
 				color: '#E7E7EB'
 			}
-		},
-		formButton: {
-			flexGrow: '1'
 		}
 	};
 
 	if (state.displayState === DISPLAY_STATES.SHOW_BUTTON) {
 		return (
 			<button
-				css={{ ...styles.button, ...styles.addLocationButton }}
+				css={{ ...styles.button }}
 				onClick={handleAddLocationButtonClick}
 			>
 				Add Location
@@ -87,21 +75,23 @@ export const AddLocationForm = props => {
 
 	if (state.displayState === DISPLAY_STATES.SHOW_FORM) {
 		return (
-			<div css={styles.form}>
+			<div>
 				<input
-					css={styles.formInput}
+					css={styles.input}
 					placeholder={'City: Roseville'}
 					type="text"
 					onChange={handleCityChange}
-				></input>
+				/>
+
 				<input
-					css={styles.formInput}
+					css={styles.input}
 					placeholder={'State: Minnesota'}
 					type="text"
 					onChange={handleStateChange}
-				></input>
+				/>
+
 				<button
-					css={{ ...styles.button, ...styles.formButton }}
+					css={{ ...styles.button }}
 					onClick={handleSaveNewLocationButtonClick}
 				>
 					Save
