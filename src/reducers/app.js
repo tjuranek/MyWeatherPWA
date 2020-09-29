@@ -39,5 +39,10 @@ export const appReducer = (state = initialState, action) => {
 		case APP_ACTIONS.SET_LOCATIONS: {
 			return { ...state, locations: action.payload };
 		}
+		default: {
+			return {
+				...state
+			};
+		}
 	}
 };

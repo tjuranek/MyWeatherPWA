@@ -14,6 +14,8 @@ const requestReducer = (state, action) => {
 			};
 		case 'REQUEST_FAILURE':
 			return { ...state, isLoading: false, isError: true };
+		default:
+			return { ...state };
 	}
 };
 
@@ -57,7 +59,7 @@ export const useRequest = request => {
 		return () => {
 			didComponentUnmount = true;
 		};
-	}, []);
+	}, [request]);
 
 	return {
 		data: state.data,

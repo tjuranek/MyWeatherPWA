@@ -21,7 +21,7 @@ export const Forecast = props => {
 	return (
 		<div css={styles.container}>
 			{forecast.map(daily => (
-				<div css={styles.daily}>
+				<div css={styles.daily} key={daily}>
 					<div>Today</div>
 
 					<div>

@@ -6,7 +6,7 @@ import { getWeatherForLocation } from '../services/weather';
 import { useRequest } from '../hooks/use-request';
 
 export const WeatherCard = props => {
-	const { id, city, state } = props;
+	const { city, state } = props;
 	const { data, isError, isLoading } = useRequest(() =>
 		getWeatherForLocation(city, state)
 	);
@@ -22,6 +22,14 @@ export const WeatherCard = props => {
 			textTransform: 'uppercase'
 		}
 	};
+
+	if (isError) {
+		return (
+			<div css={styles.container}>
+				<p> error </p>
+			</div>
+		);
+	}
 
 	if (isLoading) {
 		return (
