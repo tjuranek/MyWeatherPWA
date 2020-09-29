@@ -59,7 +59,7 @@ export const useRequest = request => {
 		return () => {
 			didComponentUnmount = true;
 		};
-	}, [request]);
+	}, []);
 
 	return {
 		data: state.data,
