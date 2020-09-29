@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useEffect, useState, Fragment } from 'react';
 import { CurrentConditions } from '../components/current-conditions';
 import { Forecast } from '../components/forecast';
 import { getWeatherForLocation } from '../services/weather';
@@ -14,26 +13,33 @@ export const WeatherCard = props => {
 
 	const styles = {
 		container: {
-			border: '1px solid black'
+			backgroundColor: '#1E213A',
+			margin: '.5em',
+			padding: '1.5em'
+		},
+		header: {
+			fontSize: '1.25em',
+			textTransform: 'uppercase'
 		}
 	};
 
+	if (isLoading) {
+		return (
+			<div css={styles.container}>
+				<p>loading</p>
+			</div>
+		);
+	}
+
 	return (
 		<div css={styles.container}>
-			{isLoading ? (
-				<p>loading</p>
-			) : (
-				<Fragment key={id}>
-					<p>
-						{city}, {state}
-					</p>
-					<CurrentConditions
-						currentConditions={data.currentConditions}
-					/>
+			<div css={styles.header}>
+				{city}, {state}
+			</div>
 
-					<Forecast forecast={data.forecast} />
-				</Fragment>
-			)}
+			<CurrentConditions currentConditions={data.currentConditions} />
+
+			<Forecast forecast={data.forecast} />
 		</div>
 	);
 };

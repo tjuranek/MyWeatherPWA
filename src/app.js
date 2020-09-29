@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useReducer } from 'react';
 import { APP_ACTIONS, appReducer, initialState } from './reducers/app';
 import { useLocalStorage } from './hooks/use-local-storage';
 import { Router } from './router';
+import './app.css';
 
 export const AppContext = createContext();
 

@@ -1,11 +1,26 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import { AppContext } from '../app';
 import { LocationsList } from '../containers/locations-list';
 import { generateGuid } from '../services/guid';
 import { APP_ACTIONS } from '../reducers/app';
-import { FooterMenu } from '../components/footer-menu';
+
+const styles = {
+	title: {
+		margin: '.5em 0'
+	},
+	heading: {
+		fontWeight: 'bold',
+		margin: '.5em 0'
+	},
+	checkbox: {
+		marginLeft: '1em'
+	},
+	currentLocationContainer: {
+		display: 'flex'
+	}
+};
 
 export const Settings = () => {
 	const { state, dispatch } = useContext(AppContext);
@@ -38,26 +53,29 @@ export const Settings = () => {
 	};
 
 	return (
-		<Fragment>
-			<h2>Settings</h2>
-			<p>Enable current location?</p>
-			<div>
-				<input
-					type="checkbox"
-					checked={state.isCurrentLocationEnabled}
-					onChange={toggleIsCurrentLocationEnabled}
-				/>
+		<div>
+			<h2 css={styles.title}>Settings</h2>
+
+			<h4 css={styles.heading}>Geographic</h4>
+			<div css={styles.currentLocationContainer}>
+				<div>Enable current location?</div>
+
+				<div>
+					<input
+						checked={state.isCurrentLocationEnabled}
+						css={styles.checkbox}
+						onChange={toggleIsCurrentLocationEnabled}
+						type="checkbox"
+					/>
+				</div>
 			</div>
 
-			<h4>Locations:</h4>
-
+			<h4 css={{ ...styles.heading, paddingTop: '2em' }}>Locations:</h4>
 			<LocationsList
 				locations={state.locations}
 				handleAddLocation={addLocation}
 				handleDeleteLocation={removeLocation}
 			/>
-
-			<FooterMenu />
-		</Fragment>
+		</div>
 	);
 };

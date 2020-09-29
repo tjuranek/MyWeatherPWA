@@ -1,33 +1,40 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+import { getIconFromWeatherType } from '../services/icons';
 
 export const Forecast = props => {
 	const { forecast } = props;
 
 	const styles = {
 		container: {
-			display: 'flex',
-			flexDirection: 'row',
-			flexWrap: 'nowrap',
-			justifyContent: 'space-between'
+			display: 'flex'
 		},
-		column: {
-			display: 'flex',
-			flexDirection: 'column'
+		daily: {
+			flexGrow: 1,
+			textAlign: 'center'
+		},
+		dailyIcon: {
+			maxWidth: '50%'
 		}
 	};
 
 	return (
 		<div css={styles.container}>
-			{forecast.map(day => {
-				return (
-					<div css={styles.column}>
-						<p>high: {day.tempHigh}</p>
-						<p>low: {day.tempLow}</p>
-						<p>description: {day.weatherType}</p>
+			{forecast.map(daily => (
+				<div css={styles.daily}>
+					<div>Today</div>
+
+					<div>
+						{daily.tempHigh}°/{daily.tempLow}°
 					</div>
-				);
-			})}
+
+					<img
+						alt="icon"
+						css={styles.dailyIcon}
+						src={getIconFromWeatherType(daily.weatherType)}
+					/>
+				</div>
+			))}
 		</div>
 	);
 };

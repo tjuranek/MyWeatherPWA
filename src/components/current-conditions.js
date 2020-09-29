@@ -1,61 +1,70 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { getIconFromWeatherType } from '../services/icons';
+
+const styles = {
+	container: {
+		display: 'flex',
+		padding: '1em 0'
+	},
+	tempContainer: {
+		height: '6em',
+		lineHeight: '6em'
+	},
+	tempContainerCurrentTemp: {
+		fontSize: '5em'
+	},
+	statsContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		paddingLeft: '3em',
+		justifyContent: 'center'
+	},
+	statsContainerStat: {
+		padding: '.25em 0'
+	},
+	statsContainerStatValue: {
+		color: '#A09FB1',
+		fontWeight: 'bold'
+	}
+};
 
 export const CurrentConditions = props => {
 	const { currentConditions } = props;
 
-	const styles = {
-		row: {
-			display: 'flex',
-			flexDirection: 'row',
-			flexWrap: 'nowrap',
-			justifyContent: 'center'
+	const stats = [
+		{
+			label: 'Conditions',
+			value: currentConditions.weatherDescription
+				? currentConditions.weatherDescription
+				: 'Cloudy'
 		},
-		column: {
-			alignItems: 'center',
-			display: 'flex',
-			flexDirection: 'row',
-			flexGrow: '1',
-			justifyContent: 'center',
-			width: '50%'
+		{
+			label: 'Chance Of Rain',
+			value: `${currentConditions.chanceOfRain}%`
 		},
-		block: {
-			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'center'
-		},
-		icon: {
-			maxHeight: '12rem',
-			maxWidth: '12rem'
+		{
+			label: 'Feels Like',
+			value: `${currentConditions.feelsLike}°`
 		}
-	};
+	];
 
 	return (
-		<div>
-			<div css={styles.row}>
-				<div css={styles.column}>
-					<div css={styles.block}>
-						<h3>{currentConditions.weatherDescription}</h3>
-						<h1>{currentConditions.tempCurrent}</h1>
-						<div>
-							<p>Feels Like: {currentConditions.feelsLike}%</p>
-							<p>
-								Chance of Rain: {currentConditions.chanceOfRain}
-								%
-							</p>
-						</div>
+		<div css={styles.container}>
+			<div css={styles.tempContainer}>
+				<div css={styles.tempContainerCurrentTemp}>
+					{currentConditions.tempCurrent}°
+				</div>
+			</div>
+
+			<div css={styles.statsContainer}>
+				{stats.map(stat => (
+					<div css={styles.statsContainerStat} key={stat.label}>
+						{stat.label} -
+						<span css={styles.statsContainerStatValue}>
+							{stat.value}
+						</span>
 					</div>
-				</div>
-				<div css={styles.column}>
-					<img
-						alt={'test'}
-						css={styles.icon}
-						src={getIconFromWeatherType(
-							currentConditions.weatherType
-						)}
-					/>
-				</div>
+				))}
 			</div>
 		</div>
 	);

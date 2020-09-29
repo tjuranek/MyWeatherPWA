@@ -39,65 +39,74 @@ export const AddLocationForm = props => {
 	};
 
 	const styles = {
-		container: {
-			marginLeft: '25%',
-			marginRight: '25%',
-			padding: '1rem',
-			width: '50%'
+		button: {
+			background: '#3C47E9',
+			border: '1px solid #E7E7EB',
+			color: '#E7E7EB',
+			fontSize: '1em',
+			height: '2em',
+			lineHeight: '2em',
+			minWidth: '25%',
+			outline: 'none'
 		},
 		addLocationButton: {
-			width: '100%'
+			margin: '1em 0'
 		},
 		form: {
 			display: 'flex',
 			justifyContent: 'space-evenly',
-			alignItems: 'center'
+			alignItems: 'center',
+			margin: '1em 0'
 		},
 		formInput: {
+			background: '#1E213A',
+			border: '1px solid #E7E7EB',
+			color: '#E7E7EB',
 			flexGrow: '2',
-			margin: '.5rem',
-			padding: '1rem'
+			marginRight: '.5em',
+			padding: '.5em .25em',
+			'&::placeholder': {
+				color: '#E7E7EB'
+			}
 		},
 		formButton: {
-			flexGrow: '1',
-			margin: '.5rem',
-			padding: '1rem'
+			flexGrow: '1'
 		}
 	};
 
-	return (
-		<div css={styles.container}>
-			{state.displayState === DISPLAY_STATES.SHOW_BUTTON && (
-				<button
-					css={styles.addLocationButton}
-					onClick={handleAddLocationButtonClick}
-				>
-					Add Location
-				</button>
-			)}
+	if (state.displayState === DISPLAY_STATES.SHOW_BUTTON) {
+		return (
+			<button
+				css={{ ...styles.button, ...styles.addLocationButton }}
+				onClick={handleAddLocationButtonClick}
+			>
+				Add Location
+			</button>
+		);
+	}
 
-			{state.displayState === DISPLAY_STATES.SHOW_FORM && (
-				<div css={styles.form}>
-					<input
-						css={styles.formInput}
-						placeholder={'City: Roseville'}
-						type="text"
-						onChange={handleCityChange}
-					></input>
-					<input
-						css={styles.formInput}
-						placeholder={'State: Minnesota'}
-						type="text"
-						onChange={handleStateChange}
-					></input>
-					<button
-						css={styles.formButton}
-						onClick={handleSaveNewLocationButtonClick}
-					>
-						Save
-					</button>
-				</div>
-			)}
-		</div>
-	);
+	if (state.displayState === DISPLAY_STATES.SHOW_FORM) {
+		return (
+			<div css={styles.form}>
+				<input
+					css={styles.formInput}
+					placeholder={'City: Roseville'}
+					type="text"
+					onChange={handleCityChange}
+				></input>
+				<input
+					css={styles.formInput}
+					placeholder={'State: Minnesota'}
+					type="text"
+					onChange={handleStateChange}
+				></input>
+				<button
+					css={{ ...styles.button, ...styles.formButton }}
+					onClick={handleSaveNewLocationButtonClick}
+				>
+					Save
+				</button>
+			</div>
+		);
+	}
 };
