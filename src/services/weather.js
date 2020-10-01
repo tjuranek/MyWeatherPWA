@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { WEATHER_TYPES } from '../constants/weather-types';
 import { WWO_CODES } from '../constants/wwo-codes';
-import { generateGuid } from '../services/guid';
+import { generateGuid } from './guid';
 
 export const getCurrentLocation = async () => {
 	try {
