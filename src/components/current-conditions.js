@@ -46,7 +46,7 @@ export const CurrentConditions = props => {
 			label: 'Feels Like',
 			value: `${currentConditions.feelsLike}°`
 		}
-	];
+    ];
 
 	return (
 		<div css={styles.container}>

@@ -15,6 +15,7 @@ const styles = {
 		outline: 'none'
 	}
 };
+
 export const ListItem = props => {
 	const { id, label, handleDelete } = props;
 
@@ -26,7 +27,7 @@ export const ListItem = props => {
 		<div css={styles.container}>
 			{label}
 			<button css={styles.button} onClick={handleDeleteItem}>
-				Remove
+				Delete
 			</button>
 		</div>
 	);
