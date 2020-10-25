@@ -31,7 +31,11 @@ export const AddLocationForm = props => {
 	};
 
 	const handleSaveNewLocationButtonClick = () => {
+        console.log('hitting save method');
+
 		if (state.city && state.state) {
+            console.log('hitting add location');
+
 			addLocation(state.city, state.state);
 		}
 
@@ -65,7 +69,8 @@ export const AddLocationForm = props => {
 	if (state.displayState === DISPLAY_STATES.SHOW_BUTTON) {
 		return (
 			<button
-				css={{ ...styles.button }}
+                css={{ ...styles.button }}
+                data-testid='addLocationButton'
 				onClick={handleAddLocationButtonClick}
 			>
 				Add Location
@@ -77,21 +82,22 @@ export const AddLocationForm = props => {
 		return (
 			<div>
 				<input
-					css={styles.input}
+                    css={styles.input}
+                    data-testid='cityInput'
 					placeholder={'City: Roseville'}
-					type="text"
 					onChange={handleCityChange}
 				/>
 
 				<input
-					css={styles.input}
+                    css={styles.input}
+                    data-testid='stateInput'
 					placeholder={'State: Minnesota'}
-					type="text"
 					onChange={handleStateChange}
 				/>
 
 				<button
-					css={{ ...styles.button }}
+                    css={{ ...styles.button }}
+                    data-testid='submitButton'
 					onClick={handleSaveNewLocationButtonClick}
 				>
 					Save
