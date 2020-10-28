@@ -26,7 +26,7 @@ export const WeatherCard = props => {
 	if (isError) {
 		return (
 			<div css={styles.container}>
-				<p> error </p>
+				<p>error</p>
 			</div>
 		);
 	}

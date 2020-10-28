@@ -31,11 +31,7 @@ export const AddLocationForm = props => {
 	};
 
 	const handleSaveNewLocationButtonClick = () => {
-        console.log('hitting save method');
-
 		if (state.city && state.state) {
-            console.log('hitting add location');
-
 			addLocation(state.city, state.state);
 		}
 
