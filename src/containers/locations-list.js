@@ -9,13 +9,12 @@ export const LocationsList = props => {
 	return (
 		<div>
 			{locations.map(location => (
-				<div key={location.id}>
-					<ListItem
-						id={location.id}
-						handleDelete={handleDeleteLocation}
-						label={`${location.city}, ${location.state}`}
-					/>
-				</div>
+                <ListItem
+                    id={location.id}
+                    key={location.id}
+                    handleDelete={handleDeleteLocation}
+                    label={`${location.city}, ${location.state}`}
+                />
 			))}
 
 			<AddLocationForm addLocation={handleAddLocation} />
