@@ -48,7 +48,7 @@ export const getWeatherForLocation = async (city, state) => {
 		}
 
 		const forecast = response.data.weather.map(data =>
-			getDailyForecast(data.hourly)
+			getDailyForecast(data)
 		);
 		const currentConditions = {
 			chanceOfRain: forecast[0].chanceOfRain,
@@ -69,14 +69,20 @@ export const getWeatherForLocation = async (city, state) => {
 };
 
 const getDailyForecast = dailyWeather => {
+    const date = dailyWeather.date;
+    const hourlyData = dailyWeather.hourly;
+
+    debugger;
+
 	const chanceOfRain = Math.max(
-		...dailyWeather.map(hourly => hourly.chanceofrain)
+		...hourlyData.map(hourly => hourly.chanceofrain)
 	);
-	const tempHigh = Math.max(...dailyWeather.map(hourly => hourly.tempF));
-	const tempLow = Math.min(...dailyWeather.map(hourly => hourly.tempF));
-	const weatherType = getWeatherType(dailyWeather);
+	const tempHigh = Math.max(...hourlyData.map(hourly => hourly.tempF));
+	const tempLow = Math.min(...hourlyData.map(hourly => hourly.tempF));
+	const weatherType = getWeatherType(hourlyData);
 
 	return {
+        date: date,
 		chanceOfRain: chanceOfRain,
 		tempHigh: tempHigh,
 		tempLow: tempLow,
