@@ -1,6 +1,6 @@
 {
-	"name": "myweather",
-	"version": "0.1.0",
+	"name": "weathery",
+	"version": "1.0.0",
 	"private": true,
 	"dependencies": {
 		"@emotion/core": "^10.0.35",
@@ -13,13 +13,11 @@
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "3.4.3"
 	},
-	"main": "src/electron-starter.js",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"electron": "electron ."
+		"eject": "react-scripts eject"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
