@@ -42,21 +42,20 @@ test('<AddLocationForm /> Renders Form State After Click', () => {
     expect(submitButton).toBeTruthy();
 });
 
-test('AddLocationForm /> Validates Form', () => {
+test('<AddLocationForm /> Resets Form On Invalid Save', () => {
     render(<AddLocationForm { ... props } />);
 
     const { addLocationButton } = getShowButtonStateNodes();
     fireEvent.click(addLocationButton);
 
     const { submitButton } = getShowFormStateNodes();
-
     fireEvent.click(submitButton);
-    expect(mockAddLocation).toHaveBeenCalledTimes(0);
+    expect(mockAddLocation).toHaveBeenCalledTimes(0);   
 });
 
-test('<AddLocationForm /> Submit Form', (a) => {
+test('<AddLocationForm /> Saves Valid Form', () => {
     render(<AddLocationForm { ... props } />);
-    
+
     const { addLocationButton } = getShowButtonStateNodes();
     fireEvent.click(addLocationButton);
 
@@ -73,4 +72,5 @@ test('<AddLocationForm /> Submit Form', (a) => {
 
     fireEvent.click(submitButton);
     expect(mockAddLocation).toHaveBeenCalledTimes(1);
+    expect(mockAddLocation).toHaveBeenCalledWith(city, state);
 });
